@@ -23,10 +23,10 @@ export async function generateMetadata({
   const isFr = lang === "fr";
   const isEn = lang === "en";
   const canonicalUrl = isFr
-    ? "https://veasy.app/fr"
+    ? "https://veasy.pro/fr"
     : isEn
-    ? "https://veasy.app/en"
-    : "https://veasy.app/pt-BR";
+    ? "https://veasy.pro/en"
+    : "https://veasy.pro/pt-BR";
   return {
     title: t.metadata.siteTitle,
     description: t.metadata.siteDescription,
@@ -40,9 +40,9 @@ export async function generateMetadata({
     },
     alternates: {
       languages: {
-        "pt-BR": "https://veasy.app/pt-BR",
-        fr: "https://veasy.app/fr",
-        en: "https://veasy.app/en",
+        "pt-BR": "https://veasy.pro/pt-BR",
+        fr: "https://veasy.pro/fr",
+        en: "https://veasy.pro/en",
       },
     },
   };
