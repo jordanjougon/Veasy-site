@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Couleurs primaires */
+  --color-teal:          #0091A5;
+  --color-teal-dark:     #007A8C;
+  --color-teal-light:    rgba(0,145,165,0.06);
+  --color-teal-medium:   #C3E6EA;
+  --color-teal-pale:     #F0F7F7;
+  --color-teal-explorer: #E0F5F7;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Fonds */
+  --color-bg-white:  #FFFFFF;
+  --color-bg-gray:   #F4F4F4;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Textes */
+  --color-text-main:  #1A1A1A;
+  --color-text-sub:   #666666;
+  --color-text-light: #A0AABB;
+
+  /* Bordures */
+  --color-border: #E2EEF0;
+
+  /* États */
+  --color-success:  #049142;
+  --color-warning:  #FF8400;
+  --color-info:     #1E90FF;
+  --color-danger:   #FF3B30;
+  --color-disabled: #C7C7CC;
+
+  /* Footer dark */
+  --color-footer-bg:     #1A1A1A;
+  --color-footer-border: #333333;
+
+  /* Typographie */
+  --font-sans: "Manrope", sans-serif;
+
+  /* Ombres */
+  --shadow-sm:      0 1px 4px rgba(0,0,0,0.06);
+  --shadow-md:      0 3px 8px rgba(0,0,0,0.16);
+  --shadow-lg:      0 6px 14px rgba(0,0,0,0.20);
+  --shadow-primary: 0 4px 8px rgba(0,145,165,0.30);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #FFFFFF;
+  color: #1A1A1A;
+  font-family: "Manrope", sans-serif;
+}
+
+/* Transitions standard 200ms */
+* {
+  transition-timing-function: ease-out;
+}
+
+/* FAQ accordéon — flèche rotation */
+details > summary .faq-arrow {
+  transition: transform 200ms ease-out;
+}
+details[open] > summary .faq-arrow {
+  transform: rotate(180deg);
 }
