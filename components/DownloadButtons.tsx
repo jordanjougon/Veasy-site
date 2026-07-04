@@ -8,7 +8,7 @@ export default function DownloadButtons({ className = "" }: Props) {
   return (
     <div className={`flex flex-col sm:flex-row gap-3 ${className}`}>
       {/* App Store badge */}
-      <a href="#" aria-label="Télécharger sur l'App Store">
+      <a href="https://apps.apple.com/fr/app/veasy/id6761346117" target="_blank" rel="noopener noreferrer" aria-label="Télécharger sur l'App Store">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="160"
