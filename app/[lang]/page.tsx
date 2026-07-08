@@ -18,9 +18,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   const t = await getDictionary(lang);
+  const base = "https://veasy.pro";
   return {
     title: t.metadata.home.title,
     description: t.metadata.home.description,
+    alternates: {
+      canonical: `${base}/${lang}`,
+      languages: {
+        "fr": `${base}/fr`,
+        "en": `${base}/en`,
+        "pt-BR": `${base}/pt-BR`,
+      },
+    },
   };
 }
 
@@ -118,6 +127,27 @@ export default async function HomePage({
         </div>
       </section>
 
+      {/* ── QU'EST-CE QUE LE PVT ── */}
+      <section className="py-16 px-6 bg-white border-b border-[#E2EEF0]">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-[24px] sm:text-[30px] font-extrabold text-[#1A1A1A] mb-5">
+            {h.pvtIntroTitle}
+          </h2>
+          <p className="text-[16px] font-medium text-[#666666] leading-relaxed mb-4">
+            {h.pvtIntroPara1}
+          </p>
+          <p className="text-[16px] font-medium text-[#666666] leading-relaxed mb-7">
+            {h.pvtIntroPara2}
+          </p>
+          <Link
+            href={`${prefix}/pvt-france`}
+            className="inline-flex items-center gap-1 text-[#0091A5] text-[15px] font-bold hover:text-[#007A8C] transition-colors duration-200"
+          >
+            {h.pvtIntroLink}
+          </Link>
+        </div>
+      </section>
+
       {/* ── SOLUTION — 3 sections alternées ── */}
       <div>
         {steps.map((step, i) => (
@@ -189,6 +219,81 @@ export default async function HomePage({
           <p className="mt-4 text-[13px] font-medium text-[#666666]">
             {h.explorerNote}
           </p>
+        </div>
+      </section>
+
+      {/* ── SÉCURITÉ / CONFIANCE ── */}
+      <section className="py-20 px-6 bg-[#F4F4F4]">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="inline-block bg-[#C3E6EA] text-[#0091A5] text-[13px] font-semibold px-3 py-1 rounded-full mb-5">
+              {h.securityBadge}
+            </span>
+            <h2 className="text-[26px] sm:text-[34px] font-extrabold text-[#1A1A1A] mb-3">
+              {h.securityTitle}
+            </h2>
+            <p className="text-[16px] font-medium text-[#666666] max-w-xl mx-auto">
+              {h.securityDesc}
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Stockage sécurisé */}
+            <div className="bg-white rounded-2xl p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-[#E2EEF0]">
+              <div className="w-10 h-10 rounded-xl bg-[#E0F5F7] flex items-center justify-center mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0091A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <h3 className="text-[15px] font-bold text-[#1A1A1A] mb-2">{h.security1Title}</h3>
+              <p className="text-[14px] font-medium text-[#666666] leading-relaxed">{h.security1Desc}</p>
+            </div>
+            {/* Données chiffrées */}
+            <div className="bg-white rounded-2xl p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-[#E2EEF0]">
+              <div className="w-10 h-10 rounded-xl bg-[#E0F5F7] flex items-center justify-center mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0091A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <h3 className="text-[15px] font-bold text-[#1A1A1A] mb-2">{h.security2Title}</h3>
+              <p className="text-[14px] font-medium text-[#666666] leading-relaxed">{h.security2Desc}</p>
+            </div>
+            {/* Connexion sécurisée */}
+            <div className="bg-white rounded-2xl p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-[#E2EEF0]">
+              <div className="w-10 h-10 rounded-xl bg-[#E0F5F7] flex items-center justify-center mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0091A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </div>
+              <h3 className="text-[15px] font-bold text-[#1A1A1A] mb-2">{h.security3Title}</h3>
+              <p className="text-[14px] font-medium text-[#666666] leading-relaxed">{h.security3Desc}</p>
+            </div>
+            {/* Aucun partage tiers */}
+            <div className="bg-white rounded-2xl p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-[#E2EEF0]">
+              <div className="w-10 h-10 rounded-xl bg-[#E0F5F7] flex items-center justify-center mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0091A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <line x1="23" y1="1" x2="1" y2="23"/>
+                </svg>
+              </div>
+              <h3 className="text-[15px] font-bold text-[#1A1A1A] mb-2">{h.security4Title}</h3>
+              <p className="text-[14px] font-medium text-[#666666] leading-relaxed">{h.security4Desc}</p>
+            </div>
+            {/* Contrôle utilisateur */}
+            <div className="bg-white rounded-2xl p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-[#E2EEF0]">
+              <div className="w-10 h-10 rounded-xl bg-[#E0F5F7] flex items-center justify-center mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0091A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+                  <polyline points="16 11 18 13 22 9"/>
+                </svg>
+              </div>
+              <h3 className="text-[15px] font-bold text-[#1A1A1A] mb-2">{h.security5Title}</h3>
+              <p className="text-[14px] font-medium text-[#666666] leading-relaxed">{h.security5Desc}</p>
+            </div>
+          </div>
         </div>
       </section>
 

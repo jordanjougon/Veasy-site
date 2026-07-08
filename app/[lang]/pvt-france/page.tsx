@@ -18,9 +18,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   const t = await getDictionary(lang);
+  const base = "https://veasy.pro";
   return {
     title: t.metadata.pvtFrance.title,
     description: t.metadata.pvtFrance.description,
+    alternates: {
+      canonical: `${base}/${lang}/pvt-france`,
+      languages: {
+        "fr": `${base}/fr/pvt-france`,
+        "en": `${base}/en/pvt-france`,
+        "pt-BR": `${base}/pt-BR/pvt-france`,
+      },
+    },
   };
 }
 
@@ -139,40 +148,35 @@ export default async function PvtFrancePage({
     <>
       {/* ── HERO ── */}
       <section className="bg-[#F0F7F7] px-6 py-16 md:py-24">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <span className="inline-block bg-[#C3E6EA] text-[#0091A5] text-[13px] font-semibold px-3 py-1 rounded-full mb-5 tracking-wide">
-              {p.badge}
-            </span>
-            <h1 className="text-[32px] sm:text-[44px] font-extrabold text-[#1A1A1A] leading-[1.15] tracking-tight">
-              {p.h1}
-            </h1>
-            <p className="mt-5 text-[17px] font-medium text-[#666666] leading-relaxed">
-              {p.heroDesc}
-            </p>
-            <div className="mt-8">
-              <Link
-                href={`${prefix}/telecharger`}
-                className="inline-flex items-center justify-center bg-[#0091A5] text-white text-[15px] font-bold px-7 py-3.5 rounded-full hover:bg-[#007A8C] hover:shadow-[0_4px_8px_rgba(0,145,165,0.30)] transition-all duration-200"
-              >
-                {p.heroCta}
-              </Link>
-            </div>
-          </div>
-          <div className="flex justify-center">
-            <Image
-              src={p.heroImg}
-              alt={p.heroImgAlt}
-              width={280}
-              height={560}
-              className="rounded-2xl"
-            />
+        <div className="max-w-3xl mx-auto text-center">
+          <span className="inline-block bg-[#C3E6EA] text-[#0091A5] text-[13px] font-semibold px-3 py-1 rounded-full mb-5 tracking-wide">
+            {p.badge}
+          </span>
+          <h1 className="text-[32px] sm:text-[44px] font-extrabold text-[#1A1A1A] leading-[1.15] tracking-tight">
+            {p.h1}
+          </h1>
+          <p className="mt-5 text-[17px] font-medium text-[#666666] leading-relaxed">
+            {p.heroDesc}
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href={`${prefix}/telecharger`}
+              className="inline-flex items-center justify-center bg-[#0091A5] text-white text-[15px] font-bold px-7 py-3.5 rounded-full hover:bg-[#007A8C] hover:shadow-[0_4px_8px_rgba(0,145,165,0.30)] transition-all duration-200"
+            >
+              {p.heroCta}
+            </Link>
+            <a
+              href="#pvt"
+              className="inline-flex items-center justify-center border-[1.5px] border-[#0091A5] text-[#0091A5] text-[15px] font-bold px-7 py-3.5 rounded-full hover:bg-[rgba(0,145,165,0.06)] transition-all duration-200"
+            >
+              {p.heroCtaSecondary}
+            </a>
           </div>
         </div>
       </section>
 
       {/* ── COMPRENDRE LE PVT ── */}
-      <section className="py-20 px-6 bg-white">
+      <section id="pvt" className="py-20 px-6 bg-white">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-[26px] sm:text-[36px] font-extrabold text-[#1A1A1A] mb-8">
             {p.whatIsTitle}
@@ -195,7 +199,7 @@ export default async function PvtFrancePage({
       </section>
 
       {/* ── LES GRANDES ÉTAPES ── */}
-      <section className="py-20 px-6 bg-[#F4F4F4]">
+      <section id="etapes" className="py-20 px-6 bg-[#F4F4F4]">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-[26px] sm:text-[36px] font-extrabold text-[#1A1A1A] text-center mb-12">
             {p.stepsTitle}
