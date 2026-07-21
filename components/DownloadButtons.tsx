@@ -61,7 +61,7 @@ export default function DownloadButtons({ className = "" }: Props) {
       </a>
 
       {/* Google Play badge */}
-      <a href="#" aria-label="Télécharger sur Google Play">
+      <a href="https://play.google.com/store/apps/details?id=com.jordanj.veasy&utm_source=emea_Med" target="_blank" rel="noopener noreferrer" aria-label="Télécharger sur Google Play">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="160"
