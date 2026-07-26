@@ -45,7 +45,7 @@ export default async function TelechargerPage({
   const d = t.telecharger;
   const isEn = lang === "en";
   const isFr = lang === "fr";
-  const prefix = isFr ? "/fr" : isEn ? "/en" : "";
+  const prefix = isFr ? "/fr" : isEn ? "/en" : "/pt-BR";
 
   const features = [d.feature1, d.feature2, d.feature3];
 
@@ -69,7 +69,7 @@ export default async function TelechargerPage({
           </div>
 
           {/* Boutons stores officiels */}
-          <DownloadButtons className="justify-center" />
+          <DownloadButtons className="justify-center" location="telecharger_hero" />
 
           {/* Récap valeur */}
           <div className="w-full bg-white rounded-2xl border border-[#E2EEF0] shadow-[0_1px_4px_rgba(0,0,0,0.06)] py-6 px-8 flex flex-col gap-4">
@@ -110,7 +110,7 @@ export default async function TelechargerPage({
             {d.ctaFinalSubtitle}
           </p>
           <div className="inline-flex flex-col sm:flex-row gap-3 bg-white/5 rounded-2xl p-4">
-            <DownloadButtons />
+            <DownloadButtons location="telecharger_cta_final" />
           </div>
         </div>
       </section>

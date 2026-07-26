@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { usePostHog } from "posthog-js/react";
 
 interface NavProps {
   lang: string;
@@ -14,6 +15,7 @@ export default function Nav({ lang }: NavProps) {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const langRef = useRef<HTMLDivElement>(null);
+  const posthog = usePostHog();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -40,7 +42,7 @@ export default function Nav({ lang }: NavProps) {
 
   const isEn = lang === "en";
   const isFr = lang === "fr";
-  const prefix = isFr ? "/fr" : isEn ? "/en" : "";
+  const prefix = isFr ? "/fr" : isEn ? "/en" : "/pt-BR";
 
   const langHrefs = {
     "pt-BR": "/pt-BR",
@@ -94,7 +96,7 @@ export default function Nav({ lang }: NavProps) {
 
           {/* Logo */}
           <Link
-            href={prefix || "/"}
+            href={prefix}
             aria-label={labels.logoAriaLabel}
             className="shrink-0"
           >
@@ -108,7 +110,7 @@ export default function Nav({ lang }: NavProps) {
 
           {/* Desktop nav — masqué sur mobile */}
           <nav className="hidden md:flex items-center gap-8 text-[15px] font-medium text-[#1A1A1A]">
-            <Link href={prefix || "/"} className="hover:text-[#0091A5] transition-colors duration-200">
+            <Link href={prefix} className="hover:text-[#0091A5] transition-colors duration-200">
               {labels.home}
             </Link>
             <Link href={`${prefix}/comment-ca-marche`} className="hover:text-[#0091A5] transition-colors duration-200">
@@ -155,6 +157,7 @@ export default function Nav({ lang }: NavProps) {
             </div>
             <Link
               href={`${prefix}/telecharger`}
+              onClick={() => posthog?.capture("download_cta_click", { location: "nav_desktop" })}
               className="inline-flex items-center bg-[#0091A5] text-white text-[15px] font-bold px-6 py-3 rounded-full hover:bg-[#007A8C] hover:shadow-[0_4px_8px_rgba(0,145,165,0.30)] transition-all duration-200"
             >
               {labels.download}
@@ -194,7 +197,7 @@ export default function Nav({ lang }: NavProps) {
         >
           <nav className="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1">
             <Link
-              href={prefix || "/"}
+              href={prefix}
               className="flex items-center h-12 px-3 rounded-lg text-[15px] font-medium text-[#1A1A1A] hover:bg-[#F4F4F4] transition-colors"
               onClick={() => setOpen(false)}
             >
@@ -218,7 +221,10 @@ export default function Nav({ lang }: NavProps) {
               <Link
                 href={`${prefix}/telecharger`}
                 className="flex items-center justify-center h-12 bg-[#0091A5] text-white text-[15px] font-bold rounded-full hover:bg-[#007A8C] transition-colors"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  posthog?.capture("download_cta_click", { location: "nav_mobile" });
+                  setOpen(false);
+                }}
               >
                 {labels.download}
               </Link>

@@ -1,14 +1,25 @@
-import Link from "next/link";
+"use client";
+
+import { usePostHog } from "posthog-js/react";
 
 interface Props {
   className?: string;
+  location?: string;
 }
 
-export default function DownloadButtons({ className = "" }: Props) {
+export default function DownloadButtons({ className = "", location }: Props) {
+  const posthog = usePostHog();
+
   return (
     <div className={`flex flex-col sm:flex-row gap-3 ${className}`}>
       {/* App Store badge */}
-      <a href="https://apps.apple.com/fr/app/veasy/id6761346117" target="_blank" rel="noopener noreferrer" aria-label="Télécharger sur l'App Store">
+      <a
+        href="https://apps.apple.com/fr/app/veasy/id6761346117"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Télécharger sur l'App Store"
+        onClick={() => posthog?.capture("appstore_click", { location })}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="160"
@@ -61,7 +72,13 @@ export default function DownloadButtons({ className = "" }: Props) {
       </a>
 
       {/* Google Play badge */}
-      <a href="https://play.google.com/store/apps/details?id=com.jordanj.veasy&utm_source=emea_Med" target="_blank" rel="noopener noreferrer" aria-label="Télécharger sur Google Play">
+      <a
+        href="https://play.google.com/store/apps/details?id=com.jordanj.veasy&utm_source=emea_Med"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Télécharger sur Google Play"
+        onClick={() => posthog?.capture("googleplay_click", { location })}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="160"

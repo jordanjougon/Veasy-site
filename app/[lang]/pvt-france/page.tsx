@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import CheckboxIcon from "@/components/CheckboxIcon";
 import WarningIcon from "@/components/WarningIcon";
+import TrackedLink from "@/components/TrackedLink";
 import DownloadButtons from "@/components/DownloadButtons";
 import { getDictionary, hasLocale, supportedLocales } from "@/lib/getDictionary";
 import { notFound } from "next/navigation";
@@ -46,7 +47,7 @@ export default async function PvtFrancePage({
   const p = t.pvtFrance;
   const isEn = lang === "en";
   const isFr = lang === "fr";
-  const prefix = isFr ? "/fr" : isEn ? "/en" : "";
+  const prefix = isFr ? "/fr" : isEn ? "/en" : "/pt-BR";
 
   const etapes = [
     { num: p.etape1Num, title: p.etape1Title, desc: p.etape1Desc },
@@ -159,12 +160,14 @@ export default async function PvtFrancePage({
             {p.heroDesc}
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
+            <TrackedLink
               href={`${prefix}/telecharger`}
+              event="download_cta_click"
+              eventData={{ location: "pvt_france_hero" }}
               className="inline-flex items-center justify-center bg-[#0091A5] text-white text-[15px] font-bold px-7 py-3.5 rounded-full hover:bg-[#007A8C] hover:shadow-[0_4px_8px_rgba(0,145,165,0.30)] transition-all duration-200"
             >
               {p.heroCta}
-            </Link>
+            </TrackedLink>
             <a
               href="#pvt"
               className="inline-flex items-center justify-center border-[1.5px] border-[#0091A5] text-[#0091A5] text-[15px] font-bold px-7 py-3.5 rounded-full hover:bg-[rgba(0,145,165,0.06)] transition-all duration-200"
@@ -247,12 +250,14 @@ export default async function PvtFrancePage({
             {p.docsCta1}
           </p>
           <div className="flex justify-center">
-            <Link
+            <TrackedLink
               href={`${prefix}/telecharger`}
+              event="download_cta_click"
+              eventData={{ location: "pvt_france_docs" }}
               className="inline-flex items-center justify-center bg-[#0091A5] text-white text-[15px] font-bold px-7 py-3.5 rounded-full hover:bg-[#007A8C] hover:shadow-[0_4px_8px_rgba(0,145,165,0.30)] transition-all duration-200"
             >
               {p.docsCta2}
-            </Link>
+            </TrackedLink>
           </div>
         </div>
       </section>
@@ -406,7 +411,7 @@ export default async function PvtFrancePage({
             {p.ctaFinalDesc}
           </p>
           <div className="inline-flex flex-col sm:flex-row gap-3 bg-white/5 rounded-2xl p-4 mb-6">
-            <DownloadButtons />
+            <DownloadButtons location="pvt_france_cta" />
           </div>
           <div className="mt-2 bg-white/5 rounded-2xl px-6 py-4 max-w-md mx-auto">
             <p className="text-[14px] font-semibold text-white mb-1">

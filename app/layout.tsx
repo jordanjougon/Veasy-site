@@ -1,5 +1,6 @@
 import type { Viewport } from "next";
 import { Manrope } from "next/font/google";
+import { Providers } from "./providers";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -23,7 +24,7 @@ export default function RootLayout({
         className="min-h-screen flex flex-col bg-white text-[#1A1A1A] font-sans antialiased"
         suppressHydrationWarning
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

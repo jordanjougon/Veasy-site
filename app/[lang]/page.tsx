@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import DownloadButtons from "@/components/DownloadButtons";
+import TrackedLink from "@/components/TrackedLink";
 import LottieHero from "@/components/LottieHero";
 import CheckboxIcon from "@/components/CheckboxIcon";
 import { getDictionary, hasLocale, supportedLocales } from "@/lib/getDictionary";
@@ -46,7 +47,7 @@ export default async function HomePage({
   const h = t.home;
   const isEn = lang === "en";
   const isFr = lang === "fr";
-  const prefix = isFr ? "/fr" : isEn ? "/en" : "";
+  const prefix = isFr ? "/fr" : isEn ? "/en" : "/pt-BR";
 
   const steps = [
     {
@@ -97,12 +98,14 @@ export default async function HomePage({
             </p>
             {/* CTAs */}
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-              <Link
+              <TrackedLink
                 href={`${prefix}/telecharger`}
+                event="download_cta_click"
+                eventData={{ location: "home_hero" }}
                 className="inline-flex items-center justify-center whitespace-nowrap bg-[#0091A5] text-white text-[15px] font-bold px-6 py-3.5 rounded-full hover:bg-[#007A8C] hover:shadow-[0_4px_8px_rgba(0,145,165,0.30)] transition-all duration-200"
               >
                 {h.ctaDownload}
-              </Link>
+              </TrackedLink>
               <Link
                 href={`${prefix}/comment-ca-marche`}
                 className="inline-flex items-center justify-center whitespace-nowrap border-[1.5px] border-[#0091A5] text-[#0091A5] text-[15px] font-bold px-6 py-3.5 rounded-full hover:bg-[rgba(0,145,165,0.06)] transition-all duration-200"
@@ -210,12 +213,14 @@ export default async function HomePage({
           <p className="text-[17px] font-medium text-[#666666] leading-relaxed mb-8">
             {h.explorerDesc}
           </p>
-          <Link
+          <TrackedLink
             href={`${prefix}/telecharger`}
+            event="download_cta_click"
+            eventData={{ location: "home_explorer" }}
             className="inline-flex items-center bg-[#0091A5] text-white text-[15px] font-bold px-8 py-4 rounded-full hover:bg-[#007A8C] hover:shadow-[0_4px_8px_rgba(0,145,165,0.30)] transition-all duration-200"
           >
             {h.explorerCta}
-          </Link>
+          </TrackedLink>
           <p className="mt-4 text-[13px] font-medium text-[#666666]">
             {h.explorerNote}
           </p>
@@ -307,7 +312,7 @@ export default async function HomePage({
             {h.ctaFinalSubtitle}
           </p>
           <div className="inline-flex flex-col sm:flex-row gap-3 bg-white/5 rounded-2xl p-4">
-            <DownloadButtons />
+            <DownloadButtons location="home_cta" />
           </div>
         </div>
       </section>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import CheckboxIcon from "@/components/CheckboxIcon";
+import TrackedLink from "@/components/TrackedLink";
 import { getDictionary, hasLocale, supportedLocales } from "@/lib/getDictionary";
 import { notFound } from "next/navigation";
 
@@ -44,7 +45,7 @@ export default async function CommentCaMarchePage({
   const c = t.commentCaMarche;
   const isEn = lang === "en";
   const isFr = lang === "fr";
-  const prefix = isFr ? "/fr" : isEn ? "/en" : "";
+  const prefix = isFr ? "/fr" : isEn ? "/en" : "/pt-BR";
 
   const steps = [
     {
@@ -181,12 +182,14 @@ export default async function CommentCaMarchePage({
           <p className="text-[#A0AABB] mb-8 text-[16px] font-medium">
             {c.ctaSubtitle}
           </p>
-          <Link
+          <TrackedLink
             href={`${prefix}/telecharger`}
+            event="download_cta_click"
+            eventData={{ location: "comment_ca_marche_cta" }}
             className="inline-flex items-center justify-center bg-[#0091A5] text-white text-[15px] font-bold px-8 py-4 rounded-full hover:bg-[#007A8C] hover:shadow-[0_4px_8px_rgba(0,145,165,0.30)] transition-all duration-200"
           >
             {c.ctaButton}
-          </Link>
+          </TrackedLink>
         </div>
       </section>
     </>
