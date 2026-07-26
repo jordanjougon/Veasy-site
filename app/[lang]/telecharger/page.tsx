@@ -16,9 +16,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   const t = await getDictionary(lang);
+  const base = "https://veasy.pro";
   return {
     title: t.metadata.telecharger.title,
     description: t.metadata.telecharger.description,
+    alternates: {
+      canonical: `${base}/${lang}/telecharger`,
+      languages: {
+        "fr": `${base}/fr/telecharger`,
+        "en": `${base}/en/telecharger`,
+        "pt-BR": `${base}/pt-BR/telecharger`,
+      },
+    },
   };
 }
 
