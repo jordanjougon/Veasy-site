@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import DownloadButtons from "@/components/DownloadButtons";
 import CheckboxIcon from "@/components/CheckboxIcon";
 import { getDictionary, hasLocale, supportedLocales } from "@/lib/getDictionary";
@@ -54,7 +55,14 @@ export default async function TelechargerPage({
         <div className="max-w-lg w-full flex flex-col items-center gap-10">
 
           {/* Titre */}
-          <div className="text-center">
+          <div className="text-center flex flex-col items-center gap-5">
+            <Image
+              src="/images/app-icon.png"
+              alt="Veasy"
+              width={80}
+              height={80}
+              className="rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.1)]"
+            />
             <h1 className="text-[28px] sm:text-[40px] font-extrabold text-[#1A1A1A] leading-[1.15] tracking-tight">
               {d.h1}
             </h1>
