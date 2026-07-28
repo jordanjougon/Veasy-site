@@ -2,18 +2,6 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const locales = ["fr", "en", "pt-BR"];
-const defaultLocale = "pt-BR";
-
-function getLocale(request: NextRequest): string {
-  const acceptLanguage = request.headers.get("accept-language") || "";
-  for (const part of acceptLanguage.split(",")) {
-    const lang = part.split(";")[0].trim().toLowerCase();
-    if (lang === "fr" || lang.startsWith("fr-")) return "fr";
-    if (lang === "en" || lang.startsWith("en-")) return "en";
-    if (lang === "pt" || lang.startsWith("pt-")) return defaultLocale;
-  }
-  return defaultLocale;
-}
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -26,21 +14,15 @@ export function proxy(request: NextRequest) {
 
   if (pathnameHasLocale) return NextResponse.next();
 
-  // Respect explicit user choice stored in cookie
+  // Only redirect on an explicit past choice (language switcher click),
+  // never guess from Accept-Language: Googlebot rarely sends a meaningful
+  // language header, and Google explicitly warns that content-negotiation
+  // redirects can stop it from crawling/indexing the other locale variants.
+  // Unlocalized paths otherwise fall through to the pt-BR rewrite below.
   const preferred = request.cookies.get("preferred-lang")?.value;
-  if (preferred && locales.includes(preferred)) {
-    if (preferred === "pt-BR") return NextResponse.next();
+  if (preferred && preferred !== "pt-BR" && locales.includes(preferred)) {
     const url = request.nextUrl.clone();
     url.pathname = `/${preferred}${pathname === "/" ? "" : pathname}`;
-    return NextResponse.redirect(url);
-  }
-
-  // First visit: detect from browser Accept-Language
-  const locale = getLocale(request);
-
-  if (locale === "fr" || locale === "en") {
-    const url = request.nextUrl.clone();
-    url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
     return NextResponse.redirect(url);
   }
 
