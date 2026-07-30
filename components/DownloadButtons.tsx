@@ -1,6 +1,7 @@
 "use client";
 
 import { usePostHog } from "posthog-js/react";
+import { reportInscriptionConversion } from "@/lib/gtag";
 
 interface Props {
   className?: string;
@@ -18,7 +19,10 @@ export default function DownloadButtons({ className = "", location }: Props) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Télécharger sur l'App Store"
-        onClick={() => posthog?.capture("appstore_click", { location })}
+        onClick={() => {
+          posthog?.capture("appstore_click", { location });
+          reportInscriptionConversion();
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +81,10 @@ export default function DownloadButtons({ className = "", location }: Props) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Télécharger sur Google Play"
-        onClick={() => posthog?.capture("googleplay_click", { location })}
+        onClick={() => {
+          posthog?.capture("googleplay_click", { location });
+          reportInscriptionConversion();
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

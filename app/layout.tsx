@@ -1,6 +1,8 @@
 import type { Viewport } from "next";
 import { Manrope } from "next/font/google";
+import Script from "next/script";
 import { Providers } from "./providers";
+import { GOOGLE_ADS_ID } from "@/lib/gtag";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -25,6 +27,22 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Providers>{children}</Providers>
+        {GOOGLE_ADS_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-ads-gtag" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GOOGLE_ADS_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
