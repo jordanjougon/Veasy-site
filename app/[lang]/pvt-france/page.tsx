@@ -115,6 +115,16 @@ export default async function PvtFrancePage({
     { q: p.faq10Q, a: p.faq10A },
   ];
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   const docFactors = [
     {
       label: p.docsFactor1Label,
@@ -147,6 +157,10 @@ export default async function PvtFrancePage({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       {/* ── HERO ── */}
       <section className="bg-[#F0F7F7] px-6 py-16 md:py-24">
         <div className="max-w-3xl mx-auto text-center">
@@ -285,6 +299,32 @@ export default async function PvtFrancePage({
         </div>
       </section>
 
+      {/* ── MODE EXPLORER ── */}
+      <section className="py-20 px-6 bg-[#F0F7F7]">
+        <div className="max-w-3xl mx-auto text-center">
+          <span className="inline-block bg-[#C3E6EA] text-[#0091A5] text-[13px] font-semibold px-3 py-1 rounded-full mb-5">
+            {p.explorerBadge}
+          </span>
+          <h2 className="text-[26px] sm:text-[36px] font-extrabold text-[#1A1A1A] mb-4">
+            {p.explorerTitle}
+          </h2>
+          <p className="text-[17px] font-medium text-[#666666] leading-relaxed mb-8">
+            {p.explorerDesc}
+          </p>
+          <TrackedLink
+            href={`${prefix}/telecharger`}
+            event="download_cta_click"
+            eventData={{ location: "pvt_france_explorer" }}
+            className="inline-flex items-center bg-[#0091A5] text-white text-[15px] font-bold px-8 py-4 rounded-full hover:bg-[#007A8C] hover:shadow-[0_4px_8px_rgba(0,145,165,0.30)] transition-all duration-200"
+          >
+            {p.explorerCta}
+          </TrackedLink>
+          <p className="mt-4 text-[13px] font-medium text-[#666666]">
+            {p.explorerNote}
+          </p>
+        </div>
+      </section>
+
       {/* ── COMMENT VEASY SIMPLIFIE ── */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
@@ -307,7 +347,7 @@ export default async function PvtFrancePage({
                   alt={f.alt}
                   width={200}
                   height={400}
-                  className="rounded-2xl"
+                  className="rounded-[1.8rem] border-[6px] border-[#1A1A1A] shadow-[0_8px_24px_rgba(0,0,0,0.18)]"
                 />
                 <div className="w-full flex flex-col gap-4">
                   {f.points.map((pt) => (
@@ -397,6 +437,76 @@ export default async function PvtFrancePage({
                 </p>
               </details>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SÉCURITÉ / CONFIANCE ── */}
+      <section className="py-20 px-6 bg-[#F4F4F4]">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <span className="inline-block bg-[#C3E6EA] text-[#0091A5] text-[13px] font-semibold px-3 py-1 rounded-full mb-5">
+              {p.securityBadge}
+            </span>
+            <h2 className="text-[26px] sm:text-[34px] font-extrabold text-[#1A1A1A] mb-3">
+              {p.securityTitle}
+            </h2>
+            <p className="text-[16px] font-medium text-[#666666] max-w-xl mx-auto">
+              {p.securityDesc}
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="bg-white rounded-2xl p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-[#E2EEF0]">
+              <div className="w-10 h-10 rounded-xl bg-[#E0F5F7] flex items-center justify-center mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0091A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <h3 className="text-[15px] font-bold text-[#1A1A1A] mb-2">{p.security1Title}</h3>
+              <p className="text-[14px] font-medium text-[#666666] leading-relaxed">{p.security1Desc}</p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-[#E2EEF0]">
+              <div className="w-10 h-10 rounded-xl bg-[#E0F5F7] flex items-center justify-center mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0091A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <h3 className="text-[15px] font-bold text-[#1A1A1A] mb-2">{p.security2Title}</h3>
+              <p className="text-[14px] font-medium text-[#666666] leading-relaxed">{p.security2Desc}</p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-[#E2EEF0]">
+              <div className="w-10 h-10 rounded-xl bg-[#E0F5F7] flex items-center justify-center mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0091A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </div>
+              <h3 className="text-[15px] font-bold text-[#1A1A1A] mb-2">{p.security3Title}</h3>
+              <p className="text-[14px] font-medium text-[#666666] leading-relaxed">{p.security3Desc}</p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-[#E2EEF0]">
+              <div className="w-10 h-10 rounded-xl bg-[#E0F5F7] flex items-center justify-center mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0091A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <line x1="23" y1="1" x2="1" y2="23"/>
+                </svg>
+              </div>
+              <h3 className="text-[15px] font-bold text-[#1A1A1A] mb-2">{p.security4Title}</h3>
+              <p className="text-[14px] font-medium text-[#666666] leading-relaxed">{p.security4Desc}</p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-[#E2EEF0]">
+              <div className="w-10 h-10 rounded-xl bg-[#E0F5F7] flex items-center justify-center mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0091A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+                  <polyline points="16 11 18 13 22 9"/>
+                </svg>
+              </div>
+              <h3 className="text-[15px] font-bold text-[#1A1A1A] mb-2">{p.security5Title}</h3>
+              <p className="text-[14px] font-medium text-[#666666] leading-relaxed">{p.security5Desc}</p>
+            </div>
           </div>
         </div>
       </section>

@@ -170,7 +170,7 @@ export default async function HomePage({
                   alt={step.alt}
                   width={280}
                   height={560}
-                  className="rounded-2xl"
+                  className="rounded-[2.5rem] border-[10px] border-[#1A1A1A] shadow-[0_8px_24px_rgba(0,0,0,0.18)]"
                 />
               </div>
               {/* Texte */}
