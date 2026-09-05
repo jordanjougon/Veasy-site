@@ -15,7 +15,7 @@ export default function DownloadButtons({ className = "", location }: Props) {
     <div className={`flex flex-col sm:flex-row gap-3 ${className}`}>
       {/* App Store badge */}
       <a
-        href="https://apps.apple.com/fr/app/veasy/id6761346117"
+        href="https://apps.apple.com/app/id6761346117"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Télécharger sur l'App Store"
@@ -77,7 +77,7 @@ export default function DownloadButtons({ className = "", location }: Props) {
 
       {/* Google Play badge */}
       <a
-        href="https://play.google.com/store/apps/details?id=com.jordanj.veasy&utm_source=emea_Med"
+        href="https://play.google.com/store/apps/details?id=com.jordanj.veasy"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Télécharger sur Google Play"
