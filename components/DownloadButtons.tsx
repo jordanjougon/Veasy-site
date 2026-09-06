@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { usePostHog } from "posthog-js/react";
 import { reportInscriptionConversion } from "@/lib/gtag";
 
@@ -8,19 +9,58 @@ interface Props {
   location?: string;
 }
 
+const APPSTORE_BASE = "https://apps.apple.com/app/id6761346117";
+const PLAY_BASE = "https://play.google.com/store/apps/details?id=com.jordanj.veasy";
+
+// Provider token App Store Connect. Sans lui, Apple peut ignorer le `ct`.
+const APPLE_PROVIDER_TOKEN = process.env.NEXT_PUBLIC_APPLE_PROVIDER_TOKEN;
+
+/**
+ * Propage la campagne (utm_campaign, posé par /p/<createur>) jusqu'aux stores,
+ * pour retrouver les téléchargements par créateur dans App Store Connect et
+ * Play Console — sans SDK ni modification de l'app.
+ */
 export default function DownloadButtons({ className = "", location }: Props) {
   const posthog = usePostHog();
+  const [appstoreHref, setAppstoreHref] = useState(APPSTORE_BASE);
+  const [playHref, setPlayHref] = useState(PLAY_BASE);
+  const [campaign, setCampaign] = useState<string | null>(null);
+
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const c = q.get("utm_campaign");
+    if (!c) return;
+
+    const source = q.get("utm_source") ?? "creator";
+    const medium = q.get("utm_medium") ?? "creator";
+    setCampaign(c);
+
+    // Apple — App Store Connect > Analytics > Acquisition
+    const apple = new URL(APPSTORE_BASE);
+    if (APPLE_PROVIDER_TOKEN) apple.searchParams.set("pt", APPLE_PROVIDER_TOKEN);
+    apple.searchParams.set("ct", c);
+    apple.searchParams.set("mt", "8");
+    setAppstoreHref(apple.toString());
+
+    // Google — Play Console > Acquisition (referrer encodé une seule fois)
+    const referrer = new URLSearchParams({
+      utm_source: source,
+      utm_medium: medium,
+      utm_campaign: c,
+    }).toString();
+    setPlayHref(`${PLAY_BASE}&referrer=${encodeURIComponent(referrer)}`);
+  }, []);
 
   return (
     <div className={`flex flex-col sm:flex-row gap-3 ${className}`}>
       {/* App Store badge */}
       <a
-        href="https://apps.apple.com/app/id6761346117"
+        href={appstoreHref}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Télécharger sur l'App Store"
         onClick={() => {
-          posthog?.capture("appstore_click", { location });
+          posthog?.capture("appstore_click", { location, campaign });
           reportInscriptionConversion();
         }}
       >
@@ -77,12 +117,12 @@ export default function DownloadButtons({ className = "", location }: Props) {
 
       {/* Google Play badge */}
       <a
-        href="https://play.google.com/store/apps/details?id=com.jordanj.veasy"
+        href={playHref}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Télécharger sur Google Play"
         onClick={() => {
-          posthog?.capture("googleplay_click", { location });
+          posthog?.capture("googleplay_click", { location, campaign });
           reportInscriptionConversion();
         }}
       >
