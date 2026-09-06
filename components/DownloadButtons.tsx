@@ -10,10 +10,14 @@ interface Props {
 }
 
 const APPSTORE_BASE = "https://apps.apple.com/app/id6761346117";
+// Forme canonique des liens de campagne, telle que générée par App Store Connect.
+const APPSTORE_CAMPAIGN_BASE = "https://apps.apple.com/app/apple-store/id6761346117";
 const PLAY_BASE = "https://play.google.com/store/apps/details?id=com.jordanj.veasy";
 
-// Provider token App Store Connect. Sans lui, Apple peut ignorer le `ct`.
-const APPLE_PROVIDER_TOKEN = process.env.NEXT_PUBLIC_APPLE_PROVIDER_TOKEN;
+// Provider token App Store Connect. Sans lui, Apple ignore le `ct`.
+// Non secret : il figure en clair dans chaque lien de campagne généré par Apple.
+const APPLE_PROVIDER_TOKEN =
+  process.env.NEXT_PUBLIC_APPLE_PROVIDER_TOKEN ?? "128718447";
 
 /**
  * Propage la campagne (utm_campaign, posé par /p/<createur>) jusqu'aux stores,
@@ -36,7 +40,7 @@ export default function DownloadButtons({ className = "", location }: Props) {
     setCampaign(c);
 
     // Apple — App Store Connect > Analytics > Acquisition
-    const apple = new URL(APPSTORE_BASE);
+    const apple = new URL(APPSTORE_CAMPAIGN_BASE);
     if (APPLE_PROVIDER_TOKEN) apple.searchParams.set("pt", APPLE_PROVIDER_TOKEN);
     apple.searchParams.set("ct", c);
     apple.searchParams.set("mt", "8");
